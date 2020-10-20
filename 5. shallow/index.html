@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://lib.baomitu.com/vue/3.0.0/vue.global.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <button @click="change">修改</button>
+        <ul v-for="item,index in data.reactive" :key="index">
+            <li>{{item.a}}</li>
+        </ul>
+    </div>
+</body>
+<script>
+    Vue.createApp({
+        setup() {
+            // let list = []
+            let list = {}
+            for (let i = 0; i < 1000 * 100; i++) {
+                list[i] = { a: i, b: { c: { d: { e: { f: 1 } } } } }
+            }
+
+            const data = {
+                // shallowReactive  -- readonly  -- reactive
+                reactive: Vue.shallowReactive(list)
+            }
+            window.data = data
+
+            return {
+                data,
+                change: () => {
+                    console.log(data.reactive[0], 'data.reactive')
+                    // data.reactive[0].a++
+                    data.reactive[0] = {
+                        a: 123
+                    }
+                }
+            }
+        },
+        beforeCreate() {
+            console.time('reactive')
+        },
+        mounted() {
+            console.timeEnd('reactive')
+        }
+    }).mount('#app')
+</script>
+
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://lib.baomitu.com/vue/3.0.0/vue.global.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <h1>reactive 为值</h1>
+        <p>{{data.reactiveValue}}</p>
+        <p>无绑定关系，修改ui不变</p>
+        <p><button @click="changeReactiveValue">修改</button></p>
+
+        <h1>reactive 为对象</h1>
+        <p>{{data.reactiveJSON}}</p>
+        <p>双向绑定</p>
+        <p><button @click="changeReactiveJSON">修改</button></p>
+
+        <h1>readonly </h1>
+        <p>{{data.readonly}}</p>
+        <p>双向绑定</p>
+        <p><button @click="changeReadonly">修改</button></p>
+
+
+        <h1>shallowReactive</h1>
+        <p>{{data.shallowReactive}}</p>
+        <p><button @click="changeShallowReactive">修改</button></p>
+
+        <h1>shallowReadonly</h1>
+        <p>{{data.shallowReadonly}}</p>
+        <p><button @click="changeShallowReadonly">修改</button></p>
+    </div>
+</body>
+<script>
+    Vue.createApp({
+        setup() {
+            const data = {
+                reactiveValue: Vue.reactive(1),
+                reactiveJSON: Vue.reactive({
+                    a: {
+                        b: 1
+                    }
+                }),
+                readonly: Vue.readonly({
+                    a: {
+                        b: 1
+                    }
+                }),
+                shallowReactive: Vue.shallowReactive({
+                    a: {
+                        b: 1
+                    }
+                }),
+                shallowReadonly: Vue.shallowReadonly({
+                    a: {
+                        b: 1
+                    }
+                })
+            }
+
+            return {
+                data, changeReactiveValue: () => {
+                    console.log('changeReactiveValue', data.reactiveValue)
+                    data.reactiveValue++
+                },
+                changeReactiveJSON: () => {
+                    data.reactiveJSON.a.b++
+                },
+                changeReadonly: () => {
+                    data.readonly.a.b++
+                },
+                changeShallowReactive: () => {
+                    console.log('data.shallowReactive.a', data.shallowReactive.a)
+                    data.shallowReactive.a.b++
+                },
+                changeShallowReadonly: () => {
+                    console.log('data.shallowReadonly.a', data.shallowReadonly.a)
+                    data.shallowReadonly.a.b++
+                }
+            }
+        }
+    }).mount('#app')
+</script>
+
+</html>

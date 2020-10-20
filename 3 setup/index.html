@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://lib.baomitu.com/vue/3.0.0/vue.global.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        {{input}}
+    </div>
+</body>
+<script>
+    Vue.createApp({
+        setup() {
+            console.log('setup')
+        },
+        beforeCreate() {
+            console.log('beforeCreate')
+        },
+        created() {
+            console.log('created')
+        },
+        data() {
+            return {
+                input: '# hello'
+            }
+        }
+    }).mount('#app')
+</script>
+
+</html>
